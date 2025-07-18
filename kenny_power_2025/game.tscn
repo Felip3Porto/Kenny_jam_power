@@ -1,9 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://devlwbbi07qh3"]
+[gd_scene load_steps=5 format=3 uid="uid://devlwbbi07qh3"]
 
 [ext_resource type="Texture2D" uid="uid://bqxeiylt7ycuw" path="res://Selected assets/playerShip2_green.png" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://cgrhprqsu7tyd" path="res://player.gd" id="1_e2o6t"]
+[ext_resource type="Texture2D" uid="uid://d01igp3tqm4f8" path="res://Selected assets/Backgrounds/Big_back.png" id="1_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://k0wvq4dvxq52" path="res://asteroid.tscn" id="3_feb5d"]
 
 [node name="Game" type="Node2D"]
+
+[node name="BigBack" type="Sprite2D" parent="."]
+texture = ExtResource("1_fc0e3")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 script = ExtResource("1_e2o6t")
@@ -16,3 +21,15 @@ polygon = PackedVector2Array(-2.7, -37.2, -2.7, -36.2, -3.4, -36.2, -4.4, -34.2,
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position_smoothing_enabled = true
+
+[node name="Asteroid" parent="." instance=ExtResource("3_feb5d")]
+position = Vector2(-206, -210)
+
+[node name="Asteroid2" parent="." instance=ExtResource("3_feb5d")]
+position = Vector2(409, -105)
+
+[node name="Asteroid3" parent="." instance=ExtResource("3_feb5d")]
+position = Vector2(-31, 201)
+
+[node name="Asteroid4" parent="." instance=ExtResource("3_feb5d")]
+position = Vector2(392, 38)
