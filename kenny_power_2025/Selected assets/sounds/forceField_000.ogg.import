@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d1npkqax58v8o"
+path="res://.godot/imported/forceField_000.ogg-a019b70d05acc3fcba146de41a7b343c.oggvorbisstr"
+
+[deps]
+
+source_file="res://Selected assets/sounds/forceField_000.ogg"
+dest_files=["res://.godot/imported/forceField_000.ogg-a019b70d05acc3fcba146de41a7b343c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
