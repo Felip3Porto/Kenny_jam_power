@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://duxa5akaoggp5"]
+
+[ext_resource type="Script" uid="uid://cjr1knii2ywnn" path="res://green_laser.gd" id="1_drb73"]
+[ext_resource type="Texture2D" uid="uid://b46s2m2j8yl23" path="res://Selected assets/lasers/laserGreen10.png" id="1_q78l2"]
+
+[node name="Green_laser" type="Area2D"]
+script = ExtResource("1_drb73")
+
+[node name="LaserGreen10" type="Sprite2D" parent="."]
+texture = ExtResource("1_q78l2")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(3.5, -27, -3.5, -27, -5, -26, -6.5, -23.5, -6.5, 12.4, -3.9, 15, -3.5, 24.6, -1.5, 25.6, -1.5, 26.7, -0.8, 27, -0.0999999, 27, 1.9, 25, 3.5, 25, 3.5, 14.4, 4.9, 13, 6.5, 13, 6.5, -23.5, 5, -26)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
