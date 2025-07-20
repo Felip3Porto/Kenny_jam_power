@@ -50,6 +50,7 @@ value = 100.0
 show_percentage = false
 
 [node name="Power" type="ProgressBar" parent="."]
+unique_name_in_owner = true
 offset_left = -66.0
 offset_top = -78.0
 offset_right = 66.0

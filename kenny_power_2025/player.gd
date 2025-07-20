@@ -1,25 +1,39 @@
 extends CharacterBody2D
+
 signal health_depleted 
+signal power_depleted
 
 @export var thrust_power: float = 1200.0
 @export var rotation_speed: float = 3.0
 @export var drag: float = 0.98
 
-
+#health bars
 var hull_health = 100.0
+var power = 100.0
+var power_loss = .03 # can improve or worsen efficiency
+
 
 #letting the laser inherit position
 @export var laser_scene: PackedScene
 var can_shoot: bool = true
+
+### we can put last minute changes to power and health levels here? 
+
 	
 func _physics_process(delta: float) -> void:
 	# Rotation with WASD
 	var rotation_input = 0.0
 	if Input.is_action_pressed("move_left"):
 		rotation_input -= 1.0
+		power -= power_loss
+		%Power.value = power 
 	if Input.is_action_pressed("move_right"):
 		rotation_input += 1.0
+		power -= power_loss
+		%Power.value = power 
 	
+	if power <= 0:
+		power_depleted.emit()
 	# Apply rotation
 	rotation += rotation_input * rotation_speed * delta
 	
@@ -27,9 +41,13 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("move_up"):
 		var thrust = Vector2.UP.rotated(rotation) * thrust_power
 		velocity += thrust * delta
+		power -= power_loss
+		%Power.value = power 
 	elif Input.is_action_pressed("move_down"):
 		var thrust = Vector2.UP.rotated(rotation) * -thrust_power * 0.5
 		velocity += thrust * delta
+		power -= power_loss
+		%Power.value = power 
 	
 	# Apply drag for floaty feel
 	velocity *= drag
@@ -60,6 +78,8 @@ func shoot_laser():
 	if laser_scene:
 		print("Trying to shoot laser...")
 		var laser = laser_scene.instantiate()
+		power -= power_loss
+		%Power.value = power 
 		print("Laser instantiated: ", laser)
 		
 		# Try different parent options
