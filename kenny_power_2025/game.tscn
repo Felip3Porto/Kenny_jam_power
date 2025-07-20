@@ -1,18 +1,34 @@
-[gd_scene load_steps=6 format=3 uid="uid://devlwbbi07qh3"]
+[gd_scene load_steps=7 format=3 uid="uid://devlwbbi07qh3"]
 
 [ext_resource type="Texture2D" uid="uid://d01igp3tqm4f8" path="res://Selected assets/Backgrounds/Big_back.png" id="1_fc0e3"]
+[ext_resource type="Script" uid="uid://lq4nu3iif0wj" path="res://game.gd" id="1_ryrav"]
 [ext_resource type="PackedScene" uid="uid://ds8tducn70ukx" path="res://player.tscn" id="2_feb5d"]
 [ext_resource type="PackedScene" uid="uid://k0wvq4dvxq52" path="res://asteroid.tscn" id="3_feb5d"]
 [ext_resource type="PackedScene" uid="uid://duxa5akaoggp5" path="res://green_laser.tscn" id="4_7jktm"]
-[ext_resource type="PackedScene" uid="uid://dahpwx1eemj6c" path="res://enemy_mob.tscn" id="4_fc0e3"]
+
+[sub_resource type="Curve2D" id="Curve2D_7jktm"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -1542, -1030, 0, 0, 0, 0, -1542, -1030, 0, 0, 0, 0, 1915, -935, 0, 0, 0, 0, 1834, 1266, 0, 0, 0, 0, -1894, 1456, 0, 0, 0, 0, -1542, -1030)
+}
+point_count = 6
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_ryrav")
 
 [node name="BigBack" type="Sprite2D" parent="."]
 texture = ExtResource("1_fc0e3")
 
 [node name="Player" parent="." instance=ExtResource("2_feb5d")]
 laser_scene = ExtResource("4_7jktm")
+
+[node name="Path2D" type="Path2D" parent="Player"]
+curve = SubResource("Curve2D_7jktm")
+
+[node name="Spawn_path" type="PathFollow2D" parent="Player/Path2D"]
+unique_name_in_owner = true
+position = Vector2(1242.51, -953.48)
+rotation = 0.0274736
+progress = 2785.56
 
 [node name="Asteroid" parent="." instance=ExtResource("3_feb5d")]
 position = Vector2(-206, -210)
@@ -26,5 +42,8 @@ position = Vector2(-31, 201)
 [node name="Asteroid4" parent="." instance=ExtResource("3_feb5d")]
 position = Vector2(392, 38)
 
-[node name="enemy_mob" parent="." instance=ExtResource("4_fc0e3")]
-position = Vector2(650, 497)
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.575
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
