@@ -40,13 +40,21 @@ func _physics_process(delta: float) -> void:
 	
 	const DAMAGE_RATE = 5.0
 	#% is only usuable after we envoke a unique name
-	var overlaping_mobs = %Hurtbox.get_overlapping_bodies()
+	var overlaping_mobs = %HurtBox.get_overlapping_bodies()
+	print("Overlapping areas found: ", overlaping_mobs.size())  # Debug line
+	#print("Current hull health: ", hull_health)  # Debug line
 	#check for damage
-	if overlaping_mobs.size() > 0: 
+	if overlaping_mobs.size() > 1: 
+		#works but now my own player colision box is counted wihtin fix later?
+		#print("Taking damage from ", overlaping_mobs.size(), " mobs")  # Debug line
 		hull_health -= DAMAGE_RATE * overlaping_mobs.size() * delta
+		%Hull_Health.value = hull_health
+		#print("New health: ", hull_health)  # Debug line
+		#%Hull_Health.max_value = new number is how we can also mod player health for upgrades
 		if hull_health <= 0: 
 			health_depleted.emit()
 			#allows us to pick up a signal in the node menu from a variable we made 
+			#placeholder breakpoint 
 
 func shoot_laser():
 	if laser_scene:
