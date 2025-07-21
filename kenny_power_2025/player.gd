@@ -34,6 +34,7 @@ func _physics_process(delta: float) -> void:
 	
 	if power <= 0:
 		power_depleted.emit()
+		print("should lock location")
 	# Apply rotation
 	rotation += rotation_input * rotation_speed * delta
 	
@@ -53,13 +54,17 @@ func _physics_process(delta: float) -> void:
 	velocity *= drag
 	
 	move_and_slide()
+	# Keep UI elements horizontal
+	#%Hull_Health.rotation = -rotation
+	#%Power.rotation = -rotation
+	
 	if Input.is_action_just_pressed("shoot") and can_shoot:
 		shoot_laser()
 	
 	const DAMAGE_RATE = 5.0
 	#% is only usuable after we envoke a unique name
 	var overlaping_mobs = %HurtBox.get_overlapping_bodies()
-	print("Overlapping areas found: ", overlaping_mobs.size())  # Debug line
+	#print("Overlapping areas found: ", overlaping_mobs.size())  # Debug line
 	#print("Current hull health: ", hull_health)  # Debug line
 	#check for damage
 	if overlaping_mobs.size() > 1: 
@@ -67,6 +72,8 @@ func _physics_process(delta: float) -> void:
 		#print("Taking damage from ", overlaping_mobs.size(), " mobs")  # Debug line
 		hull_health -= DAMAGE_RATE * overlaping_mobs.size() * delta
 		%Hull_Health.value = hull_health
+		
+		#area.is_in_group(
 		#print("New health: ", hull_health)  # Debug line
 		#%Hull_Health.max_value = new number is how we can also mod player health for upgrades
 		if hull_health <= 0: 
@@ -76,24 +83,29 @@ func _physics_process(delta: float) -> void:
 
 func shoot_laser():
 	if laser_scene:
-		print("Trying to shoot laser...")
+		#print("Trying to shoot laser...")
 		var laser = laser_scene.instantiate()
 		power -= power_loss
 		%Power.value = power 
-		print("Laser instantiated: ", laser)
+		#print("Laser instantiated: ", laser)
 		
 		# Try different parent options
 		var parent = get_parent()
-		print("Parent is: ", parent)
+		#print("Parent is: ", parent)
 		
 		if parent:
 			parent.add_child(laser)
-			print("Added laser to parent")
+			#print("Added laser to parent")
 			laser.setup_laser(global_position, rotation, velocity)
-			print("Laser setup complete")
+			#print("Laser setup complete")
 		else:
 			print("No parent found!")
 			
 		can_shoot = false
 		await get_tree().create_timer(0.2).timeout
 		can_shoot = true
+
+
+func _on_big_satellite_player_nearby(player: Variant) -> void:
+	%Power.value = power + 1 
+	print("charging")

@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://devlwbbi07qh3"]
+[gd_scene load_steps=8 format=3 uid="uid://devlwbbi07qh3"]
 
 [ext_resource type="Texture2D" uid="uid://d01igp3tqm4f8" path="res://Selected assets/Backgrounds/Big_back.png" id="1_fc0e3"]
 [ext_resource type="Script" uid="uid://lq4nu3iif0wj" path="res://game.gd" id="1_ryrav"]
 [ext_resource type="PackedScene" uid="uid://ds8tducn70ukx" path="res://player.tscn" id="2_feb5d"]
 [ext_resource type="PackedScene" uid="uid://k0wvq4dvxq52" path="res://asteroid.tscn" id="3_feb5d"]
 [ext_resource type="PackedScene" uid="uid://duxa5akaoggp5" path="res://green_laser.tscn" id="4_7jktm"]
+[ext_resource type="PackedScene" uid="uid://bbdawnysh1ee1" path="res://big_satellite.tscn" id="6_ryrav"]
 
 [sub_resource type="Curve2D" id="Curve2D_7jktm"]
 _data = {
@@ -17,6 +18,9 @@ script = ExtResource("1_ryrav")
 
 [node name="BigBack" type="Sprite2D" parent="."]
 texture = ExtResource("1_fc0e3")
+
+[node name="Big_Satellite" parent="." instance=ExtResource("6_ryrav")]
+position = Vector2(-749, -618)
 
 [node name="Player" parent="." instance=ExtResource("2_feb5d")]
 laser_scene = ExtResource("4_7jktm")
@@ -46,4 +50,40 @@ position = Vector2(392, 38)
 wait_time = 0.575
 autostart = true
 
+[node name="GameOver" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -575.5
+offset_top = -323.0
+offset_right = 575.5
+offset_bottom = 323.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.301961)
+
+[node name="Label" type="Label" parent="GameOver/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.0
+offset_top = -21.0
+offset_right = 71.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "Game Over"
+
+[connection signal="player_nearby" from="Big_Satellite" to="Player" method="_on_big_satellite_player_nearby"]
+[connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

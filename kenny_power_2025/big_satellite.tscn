@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbdawnysh1ee1"]
+
+[ext_resource type="Texture2D" uid="uid://bfgf4e7k8klyo" path="res://Selected assets/spaceStation_017.png" id="1_7dvvb"]
+[ext_resource type="Script" uid="uid://cbsfghvunmqou" path="res://big_satellite.gd" id="1_tjilx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7dvvb"]
+radius = 538.223
+
+[node name="Big_Satellite" type="CharacterBody2D"]
+script = ExtResource("1_tjilx")
+
+[node name="SpaceStation017" type="Sprite2D" parent="."]
+texture = ExtResource("1_7dvvb")
+
+[node name="Power_sphere" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Power_sphere"]
+shape = SubResource("CircleShape2D_7dvvb")
+debug_color = Color(0.194535, 0.608817, 0.571066, 0.42)
